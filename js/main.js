@@ -84,3 +84,38 @@ window.onload = function() {
         }
     });
 };
+
+
+
+// Регистрация
+function register(email, password, username) {
+    return auth.createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            return db.collection('users').doc(userCredential.user.uid).set({
+                username: username,
+                email: email,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+        });
+}
+
+// Вход
+function login(email, password) {
+    return auth.signInWithEmailAndPassword(email, password);
+}
+
+// Выход
+function logout() {
+    return auth.signOut();
+}
+
+// Проверка состояния аутентификации
+auth.onAuthStateChanged((user) => {
+    if (user) {
+        // Пользователь вошел
+        console.log("User logged in:", user.email);
+    } else {
+        // Пользователь вышел
+        console.log("User logged out");
+    }
+});
