@@ -1,4 +1,4 @@
-// Инициализация Firebase
+
 // Загрузка аниме
 function loadAnime() {
     db.collection("anime").get().then((querySnapshot) => {
