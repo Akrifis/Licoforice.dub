@@ -119,3 +119,121 @@ auth.onAuthStateChanged((user) => {
         console.log("User logged out");
     }
 });
+
+
+
+// Загрузка комментариев
+function loadComments(animeId, episodeId) {
+    return db.collection('comments')
+        .where('animeId', '==', animeId)
+        .where('episodeId', '==', episodeId)
+        .orderBy('createdAt', 'desc')
+        .get()
+        .then((querySnapshot) => {
+            const comments = [];
+            querySnapshot.forEach((doc) => {
+                comments.push(doc.data());
+            });
+            return comments;
+        });
+}
+
+// Отправка комментария
+function addComment(animeId, episodeId, userId, text) {
+    return db.collection('comments').add({
+        animeId: animeId,
+        episodeId: episodeId,
+        userId: userId,
+        text: text,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        likes: 0
+    });
+}
+
+// Лайк комментария
+function likeComment(commentId, userId) {
+    const commentRef = db.collection('comments').doc(commentId);
+    return commentRef.update({
+        likes: firebase.firestore.FieldValue.increment(1),
+        likedBy: firebase.firestore.FieldValue.arrayUnion(userId)
+    });
+}
+
+
+// Добавление в избранное
+function addToFavorites(userId, animeId) {
+    return db.collection('users').doc(userId).update({
+        favorites: firebase.firestore.FieldValue.arrayUnion(animeId)
+    });
+}
+
+// Оценка аниме
+function rateAnime(userId, animeId, rating) {
+    return db.collection('ratings').doc(`${userId}_${animeId}`).set({
+        userId: userId,
+        animeId: animeId,
+        rating: rating,
+        ratedAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+}
+
+// Получение средней оценки
+function getAverageRating(animeId) {
+    return db.collection('ratings')
+        .where('animeId', '==', animeId)
+        .get()
+        .then((querySnapshot) => {
+            let total = 0;
+            let count = 0;
+            
+            querySnapshot.forEach((doc) => {
+                total += doc.data().rating;
+                count++;
+            });
+            
+            return count > 0 ? (total / count).toFixed(1) : 0;
+        });
+}
+
+
+// Подписка на уведомления о новых сериях
+function subscribeToNotifications(userId, animeId) {
+    return db.collection('subscriptions').doc(`${userId}_${animeId}`).set({
+        userId: userId,
+        animeId: animeId,
+        subscribedAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+}
+
+// Отправка уведомлений (админская функция)
+function sendNotification(animeId, message) {
+    // Здесь можно интегрировать с Firebase Cloud Messaging
+    console.log(`Notification sent for anime ${animeId}: ${message}`);
+}
+
+
+// Добавление в историю просмотров
+function addToHistory(userId, animeId, episodeId) {
+    return db.collection('history').add({
+        userId: userId,
+        animeId: animeId,
+        episodeId: episodeId,
+        watchedAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+}
+
+// Получение истории просмотров
+function getHistory(userId, limit = 10) {
+    return db.collection('history')
+        .where('userId', '==', userId)
+        .orderBy('watchedAt', 'desc')
+        .limit(limit)
+        .get()
+        .then((querySnapshot) => {
+            const history = [];
+            querySnapshot.forEach((doc) => {
+                history.push(doc.data());
+            });
+            return history;
+        });
+}
