@@ -2,77 +2,23 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Licoforice - Аниме с нашей озвучкой</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Licoforice Anime</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <!-- Header -->
     <header>
-        <div class="container header-content">
-            <div class="logo">
-                <i class="fas fa-crown"></i>
-                <h1>Licoforice Аниме</h1>
-            </div>
-            
-            <div class="search-bar">
-                <input type="text" placeholder="Поиск аниме...">
-                <button><i class="fas fa-search"></i></button>
-            </div>
-            
-            <div class="nav-buttons">
-                <button id="homeBtn"><i class="fas fa-home"></i> Главная</button>
-                <a href="admin.html"><button><i class="fas fa-user-cog"></i> Админ</button></a>
-            </div>
+        <h1>Licoforice Anime</h1>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Поиск аниме...">
+            <button id="search-btn">Найти</button>
         </div>
     </header>
     
-    <!-- Main Content -->
-    <div class="container main-content">
-        <!-- Новые релизы -->
-        <div class="section-title">
-            <h2>Новые релизы</h2>
-            <a href="#" class="view-all">Смотреть все <i class="fas fa-arrow-right"></i></a>
-        </div>
-        
-        <div class="anime-grid" id="new-releases"></div>
-        
-        <!-- Популярные аниме -->
-        <div class="section-title">
-            <h2>Популярные аниме</h2>
-            <a href="#" class="view-all">Смотреть все <i class="fas fa-arrow-right"></i></a>
-        </div>
-        
-        <div class="anime-grid" id="popular-anime"></div>
-    </div>
-    
-    <!-- Player Modal -->
-    <div class="modal" id="playerModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="playerTitle">Название аниме - Серия 1</h3>
-                <button class="close-modal" id="closePlayerBtn"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="player-container">
-                <iframe id="vkPlayer" src="" frameborder="0" allowfullscreen></iframe>
-            </div>
-            <div class="episode-list">
-                <h4>Список серий:</h4>
-                <div class="episode-grid" id="episodeGrid"></div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <!-- Footer content -->
-            </div>
-        </div>
-    </footer>
-    
-    <script src="js/script.js"></script>
+    <main>
+        <section id="anime-list" class="anime-grid"></section>
+    </main>
+
+    <script type="module" src="/js/supabase.js"></script>
+    <script type="module" src="/js/main.js"></script>
 </body>
 </html>
