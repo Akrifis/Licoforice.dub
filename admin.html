@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель - Licoforice</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-crown"></i>
+                <h1>Licoforice Админ</h1>
+            </div>
+            
+            <div class="nav-buttons">
+                <a href="index.html"><button><i class="fas fa-home"></i> На сайт</button></a>
+                <button id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Выйти</button>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container main-content">
+        <div class="admin-panel">
+            <!-- Admin panel content -->
+            <div class="admin-tabs">
+                <button class="admin-tab active" data-tab="add-anime">Добавить аниме</button>
+                <button class="admin-tab" data-tab="add-episode">Добавить серию</button>
+                <button class="admin-tab" data-tab="manage-content">Управление контентом</button>
+            </div>
+            
+            <div class="admin-form">
+                <!-- Forms will be here -->
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/admin.js"></script>
+</body>
+</html>
