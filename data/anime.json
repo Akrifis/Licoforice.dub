@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "title": "Восхождение героя щита 3 сезон",
+        "cover": "https://example.com/cover1.jpg",
+        "status": "Онгоинг",
+        "rating": 8.7,
+        "episodes": 12,
+        "episodesData": [
+            {"id": 1, "title": "Серия 1", "ownerId": -12345678, "videoId": "456789012"},
+            {"id": 2, "title": "Серия 2", "ownerId": -12345678, "videoId": "456789013"}
+        ]
+    },
+    {
+        "id": 2,
+        "title": "Магическая битва 2 сезон",
+        "cover": "https://example.com/cover2.jpg",
+        "status": "Онгоинг",
+        "rating": 9.2,
+        "episodes": 23,
+        "episodesData": [
+            {"id": 1, "title": "Серия 1", "ownerId": -87654321, "videoId": "987654321"},
+            {"id": 2, "title": "Серия 2", "ownerId": -87654321, "videoId": "987654322"}
+        ]
+    }
+]
