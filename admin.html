@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Админ-панель Licoforice Anime</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="admin-container">
+        <h1>Административная панель</h1>
+        
+        <section id="auth-section">
+            <h2>Авторизация</h2>
+            <form id="login-form">
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" placeholder="Пароль" required>
+                <button type="submit">Войти</button>
+            </form>
+        </section>
+        
+        <section id="admin-panel" class="hidden">
+            <h2>Управление аниме</h2>
+            
+            <div class="admin-section">
+                <h3>Добавить аниме</h3>
+                <form id="add-anime-form">
+                    <input type="text" id="anime-title" placeholder="Название" required>
+                    <textarea id="anime-description" placeholder="Описание"></textarea>
+                    <input type="number" id="anime-year" placeholder="Год выпуска">
+                    <input type="file" id="anime-poster" accept="image/*">
+                    <button type="submit">Добавить</button>
+                </form>
+            </div>
+            
+            <div class="admin-section">
+                <h3>Добавить серию</h3>
+                <form id="add-episode-form">
+                    <select id="anime-select" required>
+                        <!-- Заполнится через JS -->
+                    </select>
+                    <input type="text" id="episode-title" placeholder="Название серии" required>
+                    <input type="number" id="episode-number" placeholder="Номер серии" required>
+                    <input type="file" id="episode-video" accept="video/*" required>
+                    <button type="submit">Добавить</button>
+                </form>
+            </div>
+            
+            <div class="admin-section">
+                <h3>Список аниме</h3>
+                <div id="anime-list-admin"></div>
+            </div>
+        </section>
+    </div>
+
+    <script type="module" src="/js/supabase.js"></script>
+    <script type="module" src="/js/admin.js"></script>
+</body>
+</html>
