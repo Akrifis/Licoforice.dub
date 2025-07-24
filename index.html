@@ -1,29 +1,666 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-  <title>Все серии</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Licoforice - Аниме с нашей озвучкой</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #8a2be2;
+            --primary-dark: #6a1cb9;
+            --secondary: #ff6b6b;
+            --dark: #1a1a2e;
+            --darker: #0d0d1a;
+            --light: #f0f0f5;
+            --gray: #2d2d44;
+            --card-bg: #252536;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--darker), var(--dark));
+            color: var(--light);
+            min-height: 100vh;
+            background-attachment: fixed;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: rgba(26, 26, 46, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--primary);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo i {
+            color: var(--primary);
+            font-size: 28px;
+        }
+        
+        .logo h1 {
+            font-size: 24px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+        
+        .search-bar {
+            display: flex;
+            width: 40%;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 30px 0 0 30px;
+            border: none;
+            background: var(--card-bg);
+            color: var(--light);
+            font-size: 16px;
+        }
+        
+        .search-bar button {
+            padding: 12px 20px;
+            border-radius: 0 30px 30px 0;
+            border: none;
+            background: var(--primary);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .search-bar button:hover {
+            background: var(--primary-dark);
+        }
+        
+        .nav-buttons button {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-left: 10px;
+        }
+        
+        .nav-buttons button:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 40px 0;
+        }
+        
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .section-title h2 {
+            font-size: 28px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .view-all {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .view-all:hover {
+            text-decoration: underline;
+        }
+        
+        .anime-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .anime-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .anime-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(138, 43, 226, 0.25);
+        }
+        
+        .anime-card img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .anime-info {
+            padding: 15px;
+        }
+        
+        .anime-info h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .anime-info .rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #ffd700;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .anime-info .episodes {
+            display: flex;
+            justify-content: space-between;
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        .status {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .dub-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--secondary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        /* Player Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            width: 90%;
+            max-width: 900px;
+            background: var(--dark);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .modal-header {
+            padding: 20px;
+            background: var(--darker);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h3 {
+            font-size: 22px;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--secondary);
+            font-size: 28px;
+            cursor: pointer;
+        }
+        
+        .player-container {
+            position: relative;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        }
+        
+        .player-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .episode-list {
+            padding: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .episode-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 12px;
+        }
+        
+        .episode {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .episode:hover {
+            background: var(--primary);
+            transform: scale(1.05);
+        }
+        
+        .episode.active {
+            background: var(--primary);
+            font-weight: 600;
+        }
+        
+        /* Admin Panel */
+        .admin-panel {
+            background: var(--darker);
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: 50px;
+            display: none;
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--primary);
+        }
+        
+        .admin-header h2 {
+            font-size: 28px;
+        }
+        
+        .admin-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        
+        .admin-tab {
+            padding: 12px 25px;
+            background: var(--gray);
+            border: none;
+            border-radius: 8px;
+            color: var(--light);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .admin-tab.active {
+            background: var(--primary);
+        }
+        
+        .admin-form {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .form-group input, 
+        .form-group textarea, 
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--gray);
+            background: var(--dark);
+            color: var(--light);
+            font-size: 16px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .submit-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background: var(--primary-dark);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--darker);
+            padding: 40px 0 20px;
+            margin-top: 50px;
+            border-top: 1px solid var(--primary);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+        }
+        
+        .footer-links a {
+            display: block;
+            color: #aaa;
+            margin-bottom: 10px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--gray);
+            border-radius: 50%;
+            color: var(--light);
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray);
+            color: #777;
+            font-size: 14px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .search-bar {
+                width: 100%;
+            }
+            
+            .anime-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .anime-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .logo h1 {
+                font-size: 20px;
+            }
+            
+            .nav-buttons button {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div id="episodes"></div>
-
-  <script>
-    const DATA_URL = 'https://raw.githubusercontent.com/ваш-логин/ваш-репозиторий/main/data.json';
-
-    fetch(DATA_URL)
-      .then(response => response.json())
-      .then(data => {
-        const container = document.getElementById('episodes');
-        data.episodes.forEach(ep => {
-          container.innerHTML += `
-            <div class="episode">
-              <h2>${ep.title}</h2>
-              <p>${ep.description}</p>
-              <small>${ep.date}</small>
-              <img src="${ep.thumbnail}" width="200">
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-crown"></i>
+                <h1>Licoforice Аниме</h1>
             </div>
-          `;
-        });
-      });
-  </script>
-</body>
-</html>
+            
+            <div class="search-bar">
+                <input type="text" placeholder="Поиск аниме...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            
+            <div class="nav-buttons">
+                <button id="homeBtn"><i class="fas fa-home"></i> Главная</button>
+                <button id="adminBtn"><i class="fas fa-user-cog"></i> Админ</button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <div class="container main-content">
+        <!-- Новые релизы -->
+        <div class="section-title">
+            <h2>Новые релизы</h2>
+            <a href="#" class="view-all">Смотреть все <i class="fas fa-arrow-right"></i></a>
+        </div>
+        
+        <div class="anime-grid">
+            <!-- Anime cards will be generated by JS -->
+        </div>
+        
+        <!-- Популярные аниме -->
+        <div class="section-title">
+            <h2>Популярные аниме</h2>
+            <a href="#" class="view-all">Смотреть все <i class="fas fa-arrow-right"></i></a>
+        </div>
+        
+        <div class="anime-grid">
+            <!-- Anime cards will be generated by JS -->
+        </div>
+        
+        <!-- Админ панель -->
+        <div class="admin-panel" id="adminPanel">
+            <div class="admin-header">
+                <h2><i class="fas fa-user-cog"></i> Административная панель</h2>
+                <button id="closeAdminBtn" class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <div class="admin-tabs">
+                <button class="admin-tab active" data-tab="add-anime">Добавить аниме</button>
+                <button class="admin-tab" data-tab="add-episode">Добавить серию</button>
+                <button class="admin-tab" data-tab="manage-content">Управление контентом</button>
+            </div>
+            
+            <div class="admin-form">
+                <!-- Форма добавления аниме -->
+                <div class="tab-content" id="add-anime-tab">
+                    <h3>Добавить новое аниме</h3>
+                    <form id="addAnimeForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="animeTitle">Название аниме</label>
+                                <input type="text" id="animeTitle" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="animeCover">Ссылка на обложку</label>
+                                <input type="text" id="animeCover" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="animeStatus">Статус</label>
+                                <select id="animeStatus" required>
+                                    <option value="Онгоинг">Онгоинг</option>
+                                    <option value="Завершён">Завершён</option>
+                                    <option value="Анонс">Анонс</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="animeRating">Рейтинг</label>
+                                <input type="number" id="animeRating" min="1" max="10" step="0.1" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="animeDescription">Описание</label>
+                            <textarea id="animeDescription" rows="4" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Добавить аниме</button>
+                    </form>
+                </div>
+                
+                <!-- Форма добавления серии -->
+                <div class="tab-content" id="add-episode-tab" style="display: none;">
+                    <h3>Добавить новую серию</h3>
+                    <form id="addEpisodeForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="selectAnime">Выберите аниме</label>
+                                <select id="selectAnime" required>
+                                    <option value="">-- Выберите аниме --</option>
+                                    <option value="1">Восхождение героя щита</option>
+                                    <option value="2">Магическая битва</option>
+                                    <option value="3">Ван-Пис</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="episodeNumber">Номер серии</label>
+                                <input type="number" id="episodeNumber" min="1" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="vkOwnerId">VK Owner ID</label>
+                                <input type="text" id="vkOwnerId" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="vkVideoId">VK Video ID</label>
+                                <input type="text" id="vkVideoId" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="episodeTitle">Название серии</label>
+                            <input type="text" id="episodeTitle" required>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">
